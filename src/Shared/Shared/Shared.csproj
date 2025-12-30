@@ -8,6 +8,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Extensions.Configuration.ConfigurationManager" Version="1.0.2" />
+		<PackageReference Include="MediatR" Version="8.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.2" />
 	</ItemGroup>
