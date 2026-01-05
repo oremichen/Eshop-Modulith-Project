@@ -1,7 +1,8 @@
-﻿
+﻿using Catalog.Product.Events;
+
 namespace Catalog.Product.Models
 {
-    public class Product: Entity<Guid>
+    public class Product: Aggregate<Guid>
     {
         public string Name { get; private set; } = default!;
         public List<string> Category { get; private set; } = new();
@@ -23,6 +24,9 @@ namespace Catalog.Product.Models
                 ImageFile = imageFile,
                 Price = price
             };
+
+            product.AddDomanEvent(new ProductCreatedEvent(product));
+
             return product;
         }
 
@@ -35,7 +39,13 @@ namespace Catalog.Product.Models
             Category = category;
             Description = description;
             ImageFile = imageFile;
-            Price = price;
+            //Price = price;
+
+            if (Price != price)
+            {
+                Price = price;
+                AddDomanEvent(new ProductPriceChangedEvent(this));
+            }
         }
 
     }
