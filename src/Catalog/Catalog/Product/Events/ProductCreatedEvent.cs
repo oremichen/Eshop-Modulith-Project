@@ -1,3 +1,11 @@
 ﻿namespace Catalog.Product.Events;
 
-public record ProductCreatedEvent(Models.Product product): IDomainEvent;
+public class ProductCreatedEvent: IDomainEvent
+{
+    private Models.Product Product {  get; }
+
+    public ProductCreatedEvent(Models.Product product)
+    {
+        Product = product;
+    }
+}

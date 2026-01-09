@@ -11,7 +11,7 @@ namespace Shared.DDD
         private readonly List<IDomainEvent> _domainEvents = new();
         public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
 
-        public void AddDomanEvent(IDomainEvent domainEvent)
+        public void AddDomainEvent(IDomainEvent domainEvent)
         {
             _domainEvents.Add(domainEvent);
         }
