@@ -1,3 +1,11 @@
 ﻿namespace Catalog.Product.Events;
 
-public record ProductPriceChangedEvent(Models.Product product): IDomainEvent;
+public class ProductPriceChangedEvent : IDomainEvent
+{
+    public Models.Product Product { get; }
+
+    public ProductPriceChangedEvent(Models.Product product)
+    {
+        Product = product;
+    }
+}
