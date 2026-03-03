@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System.Security.Cryptography;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Data.Interceptors;
@@ -9,10 +11,18 @@ namespace Catalog
     {
         public static IServiceCollection AddCatalogModule(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("Database");
-            services.AddDbContext<CatalogDbContext>(options =>
+            services.AddMediatR(config =>
             {
-                options.AddInterceptors(new AuditableEntityInterceptor());
+                config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            });
+
+            services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+            services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventInterceptor>();
+
+            var connectionString = configuration.GetConnectionString("Database");
+            services.AddDbContext<CatalogDbContext>((sp, options) =>
+            {
+                options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
                 options.UseNpgsql(connectionString);
             });
 
