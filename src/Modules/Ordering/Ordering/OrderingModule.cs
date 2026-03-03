@@ -13,7 +13,6 @@ namespace Ordering
     {
         public static IServiceCollection AddOrderingModule(this IServiceCollection services, IConfiguration configuration)
         {
-
             return services;
         }
 
